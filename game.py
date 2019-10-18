@@ -45,10 +45,10 @@ def showMap(DISPLAY,matrixMap,p1):
                 pygame.draw.rect(DISPLAY,WHITE,(x*SIZE_OBJECT,y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
             if(elemento == INIMIGO):
                 pygame.draw.rect(DISPLAY,RED,(x*SIZE_OBJECT,y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
-            if(matrixMap[p1.x][p1.y] == INIMIGO):
-                print("morreu")
-            else:
-                pygame.draw.rect(DISPLAY,YELLOW,(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
+        if(matrixMap[p1.x][p1.y] == INIMIGO):
+            print("morreu")
+        else:
+            pygame.draw.rect(DISPLAY,YELLOW,(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
             
                 # pygame.display.update()
             # if(elemento == 1):
