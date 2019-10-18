@@ -16,6 +16,16 @@ LIVRE = 2
 PAREDE = 0
 INICIO = 1
 INIMIGO = 3
+INIMIGOV = 4
+INIMIGOVV = 5
+INIMIGOH = 6
+INIMIGOHH = 7
+INIMIGOD = 8
+INIMIGODD = 9
+INIMIGOD1 = 10
+INIMIGOD11 = 11
+INIMIGOD2 = 12
+INIMIGOD22 = 13
 PLAYER = 999
 #PLAYER
 MOV_UP = -1
@@ -29,6 +39,26 @@ BLUE=(0,0,255)
 RED =(255,0,0)
 GREEN =(255,0,0)
 YELLOW =(255,255,0)
+#sensor
+sensor = {
+    'U':0,
+    'UCount':0,
+    'L':0,
+    'LCount':0,
+    'R':0,
+    'RCount':0,
+    'D':0,
+    'DCount':0,
+    'UR':0,
+    'URCount':0,
+    'DR':0,
+    'DRCount':0,
+    'DL':0,
+    'DLCount':0,
+    'UL':0,
+    'ULCount':0
+
+}
 
 def showMap(DISPLAY,matrixMap,p1):
     
@@ -43,23 +73,84 @@ def showMap(DISPLAY,matrixMap,p1):
                 pygame.draw.rect(DISPLAY,BLUE,(x*SIZE_OBJECT,y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
             if(elemento == LIVRE):
                 pygame.draw.rect(DISPLAY,WHITE,(x*SIZE_OBJECT,y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
-            if(elemento == INIMIGO):
+            if(elemento > INIMIGO):
                 pygame.draw.rect(DISPLAY,RED,(x*SIZE_OBJECT,y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
-        if(matrixMap[p1.x][p1.y] == INIMIGO):
-            print("morreu")
-        else:
-            pygame.draw.rect(DISPLAY,YELLOW,(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
-            
+    
                 # pygame.display.update()
             # if(elemento == 1):
             #     pygame.draw.rect(DISPLAY,RED,(x*SIZE_OBJECT,y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
                 
             count = count +1
     
-    # showInimigos(DISPLAY)
     
-    
+    if(matrixMap[p1.x][p1.y] > INIMIGO):
+        print("morreu")
+    else:
+        pygame.draw.rect(DISPLAY,YELLOW,(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
+    readSensor(DISPLAY,matrixMap,p1,sensor)
     pygame.display.update()
+    
+def readSensor(DISPLAY,matrixMap,p1,sensor):
+    count = 0
+    while(matrixMap[p1.x+count][p1.y] != PAREDE and matrixMap[p1.x+count][p1.y] < INIMIGO and p1.x+count < 50):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), (p1.x*SIZE_OBJECT, p1.y*SIZE_OBJECT), ((p1.x+ count)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['R'] = matrixMap[p1.x+count][p1.y]
+    sensor['RCount'] = count
+    
+
+    count = 0
+    while(matrixMap[p1.x-count][p1.y] != PAREDE and matrixMap[p1.x-count][p1.y] < INIMIGO):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x-count)*SIZE_OBJECT, p1.y*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['L'] = matrixMap[p1.x-count][p1.y]
+    sensor['LCount'] = count
+    
+    
+    count = 0
+    while(matrixMap[p1.x][p1.y + count] != PAREDE and matrixMap[p1.x][p1.y + count] < INIMIGO ):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x)*SIZE_OBJECT, (p1.y+count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['U'] = matrixMap[p1.x][p1.y+count]
+    sensor['UCount'] = count
+
+    count = 0
+    while(matrixMap[p1.x][p1.y - count] != PAREDE and matrixMap[p1.x][p1.y - count] < INIMIGO ):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['D'] = matrixMap[p1.x][p1.y - count]
+    sensor['DCount'] = count
+
+    count = 0
+    while(matrixMap[p1.x - count][p1.y + count] != PAREDE and matrixMap[p1.x-count][p1.y + count] < INIMIGO ):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x-count)*SIZE_OBJECT, (p1.y+count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['DL'] = matrixMap[p1.x-count][p1.y + count]
+    sensor['DLCount'] = count
+
+    count = 0
+    while(matrixMap[p1.x + count][p1.y + count] != PAREDE and matrixMap[p1.x+count][p1.y + count] < INIMIGO ):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x+count)*SIZE_OBJECT, (p1.y+count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['DR'] = matrixMap[p1.x+count][p1.y + count]
+    sensor['DRCount'] = count
+    
+    count = 0
+    while(matrixMap[p1.x + count][p1.y - count] != PAREDE and matrixMap[p1.x+count][p1.y - count] < INIMIGO ):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x + count)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['UR'] = matrixMap[p1.x+count][p1.y - count]
+    sensor['URCount'] = count
+
+    count = 0
+    while(matrixMap[p1.x - count][p1.y - count] != PAREDE and matrixMap[p1.x-count][p1.y - count] < INIMIGO ):
+        count +=1
+    pygame.draw.line(DISPLAY, (0,150,0), ((p1.x - count)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
+    sensor['UL'] = matrixMap[p1.x-count][p1.y - count]
+    sensor['ULCount'] = count
+
+    print(sensor['UL'],count)
+    
 
 
 def criaInimigos():
@@ -130,12 +221,15 @@ def main():
     # mapa
     mapa = criaMapa(WIDTH,HEIGHT)
     
+    ####
+    
     
     WHITE=(255,255,255)
     DISPLAY.fill(WHITE)
 
     #cria player
-    p1 = Player(mapa,0,12)
+    p1 = Player(mapa,1,12)
+    readSensor(DISPLAY, mapa,p1,sensor)# já configura os sensoress
     
 
     count = 0

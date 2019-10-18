@@ -4,6 +4,16 @@ class Inimigo:
     PAREDE = 0
     INICIO = 1
     INIMIGO = 3
+    INIMIGOV = 4
+    INIMIGOVV = 5
+    INIMIGOH = 6
+    INIMIGOHH = 7
+    INIMIGOD = 8
+    INIMIGODD = 9
+    INIMIGOD1 = 10
+    INIMIGOD11 = 11
+    INIMIGOD2 = 12
+    INIMIGOD22 = 13
     def __init__(self, nome,x,y,depth,sentido = 0):
         
         self.id = nome
@@ -33,8 +43,11 @@ class Inimigo:
                     self.y += 1    
                 else:
                     # print('sub')
-                    self.y -= 1    
-            mapa[self.x][self.y] = 3
+                    self.y -= 1
+            if(self.sentido == 0 ):
+                mapa[self.x][self.y] = self.INIMIGOV
+            else:
+                mapa[self.x][self.y] = self.INIMIGOV
         if(self.id == 'h'):
             if(self.sentido == 0):
                 if(self.XMax == self.x or mapa[self.x + 1][self.y] == self.PAREDE):
@@ -52,7 +65,11 @@ class Inimigo:
                 else:
                     # print('sub')
                     self.x -= 1    
-            mapa[self.x][self.y] = 3
+            
+            if(self.sentido == 0 ):
+                mapa[self.x][self.y] = self.INIMIGOH
+            else:
+                mapa[self.x][self.y] = self.INIMIGOHH
         if(self.id == 'd1'):
             if(self.sentido == 0):
                 if(self.XMax == self.x or mapa[self.x + 1][self.y + 1] == 0):
@@ -74,7 +91,11 @@ class Inimigo:
                     # print('sub')
                     self.x -= 1    
                     self.y -= 1
-            mapa[self.x][self.y] = 3
+            
+            if(self.sentido == 0 ):
+                mapa[self.x][self.y] = self.INIMIGOD1
+            else:
+                mapa[self.x][self.y] = self.INIMIGOD11
         if(self.id == 'd2'):
             if(self.sentido == 0):
                 if(self.XMin == self.x or mapa[self.x - 1][self.y + 1] == 0):
@@ -96,7 +117,12 @@ class Inimigo:
                     # print('sub')
                     self.x += 1    
                     self.y -= 1
-            mapa[self.x][self.y] = 3
+            
+            if(self.sentido == 0 ):
+                mapa[self.x][self.y] = self.INIMIGOD1
+            else:
+                mapa[self.x][self.y] = self.INIMIGOD11
+            
 
                 
                 
