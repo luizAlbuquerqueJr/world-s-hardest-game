@@ -35,26 +35,26 @@ class Neural:
     
     def predict(self,X):
         b = np.append([1], X)
-        print(b)
+        # print(b)
         s0 = b.dot(self.camada1.transpose())
         s0 = self.sigmoid(s0)
-        print(s0)
+        # print(s0)
         
 
         b = np.append([1], s0)
 #         print(b)
         s1 = b.dot(self.camada2.transpose())
         s1 = self.sigmoid(s1)
-        print(s1)
+        # print(s1)
         
         b = np.append([1], s1)
 #         print(b)
         s2 = b.dot(self.camada3.transpose())
         
         s2 = self.sigmoid(s2)
-        print(s2)
+        # print(s2)
         
         
-        print(np.argmax(s2))
+        # print(np.argmax(s2))
         return np.argmax(s2)
 

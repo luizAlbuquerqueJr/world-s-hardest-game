@@ -348,16 +348,13 @@ def mainGame(players,p1_redes,sensores,isMaquina):
         readSensor(DISPLAY, mapa,players,sensores)# já configura os sensoress
         if(isMaquina):
             for p1,p1_rede,sensor in zip(players,p1_redes,sensores):
-                print("a")
                 if(p1.vida == 1):
-                    # print("movimenta")
                     movimento = p1_rede.predict(np.array(list(sensor.values())))
-                    movimentaPlayer(p1,mapa,movimento)
                     
-        fimJogo = True
-        for p1 in players:
-            if(p1.vida == 1): 
-                fimJogo = False
+        # fimJogo = True
+        # for p1 in players:
+        #     if(p1.vida == 1): 
+        #         fimJogo = False
 
         showMap(DISPLAY,mapa,players) 
             

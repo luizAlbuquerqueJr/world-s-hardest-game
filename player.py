@@ -11,11 +11,14 @@ class Player:
     MOV_DOWN = -2
     MOV_LEFT = -3
     MOV_RIGHt = -4
-    def __init__(self,mapa,x,y):
-        self.mapaPlayer = np.zeros((len(mapa),len(mapa)))
+    def __init__(self,x,y):
         self.x = x
         self.y = y
+        self.vida = 1
+
         # mapa[x][y] = self.PLAYER
+    # def setMap(self,mapa):
+    #     self.mapaPlayer = np.zeros((len(mapa),len(mapa)))
         
         
     def step(self,mapa,movimento):
@@ -28,35 +31,38 @@ class Player:
 
         if(movimento == self.MOV_DOWN):
             if(mapa[self.x][self.y+1] == self.PAREDE):
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
+                self.vida = 0
                 return False
             else:
                 self.y += 1
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
                 
         if(movimento == self.MOV_RIGHt):
             if(mapa[self.x +1 ][self.y] == self.PAREDE):
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
+                self.vida = 0
                 return False
             else:
                 if(self.x != len(mapa[0])):
                     self.x += 1
-                    print(self.x)
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
         if(movimento == self.MOV_UP):
             if(mapa[self.x][self.y-1] == self.PAREDE ):
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
+                self.vida = 0
                 return False
             else:
                 self.y -= 1
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
         if(movimento == self.MOV_LEFT):
             if(mapa[self.x -1 ][self.y] == self.PAREDE):
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
+                self.vida = 0
                 return False
             else:
                 if(self.x != 0):
                     self.x -= 1
-                self.mapaPlayer[self.x][self.y] = 1
+                # self.mapaPlayer[self.x][self.y] = 1
         return True
     
