@@ -15,7 +15,7 @@ class Player:
         self.mapaPlayer = np.zeros((len(mapa),len(mapa)))
         self.x = x
         self.y = y
-        mapa[x][y] = self.PLAYER
+        # mapa[x][y] = self.PLAYER
         
         
     def step(self,mapa,movimento):
