@@ -14,14 +14,22 @@ class Neural:
     #         *           
     def sigmoid(x):                                        
         return 1 / (1 + np.exp(-x))
-
+        
 
     def __init__(self,nInput,camadas = np.array([5,3,4])):
         # numero de neuronio e numero de caracteristica 
+        if(camadas[0] == 0):
+            self.nInput = nInput
+            self.camada1 = np.zeros((camadas[0],nInput +1))
+            self.camada2 = np.zeros((camadas[1],camadas[0] + 1))
+            self.camada3 = np.zeros((camadas[2],camadas[1] + 1))
+
         
-        self.camada1 = np.random.rand(camadas[0],nInput +1)
-        self.camada2 = np.random.rand(camadas[1],camadas[0] + 1)
-        self.camada3 = np.random.rand(camadas[2],camadas[1] + 1)
+        else:
+            self.nInput = nInput
+            self.camada1 = np.random.rand(camadas[0],nInput +1)
+            self.camada2 = np.random.rand(camadas[1],camadas[0] + 1)
+            self.camada3 = np.random.rand(camadas[2],camadas[1] + 1)
         
         
 #         self.camada1 = np.zeros((camadas[0],nInput +1))

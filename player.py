@@ -15,6 +15,7 @@ class Player:
         self.x = x
         self.y = y
         self.vida = 1
+        self.fitness = 999
 
         # mapa[x][y] = self.PLAYER
     # def setMap(self,mapa):
