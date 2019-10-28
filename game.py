@@ -14,8 +14,8 @@ import time
 
 #constante do AG
 NUM_CRUZAMENTO_POR_EPOCA = 1
-NUM_INVIDUOS_TORNEIO = 70
-NUM_POP = 100
+NUM_INVIDUOS_TORNEIO = 170
+NUM_POP = 200
 TAXA_MUTACAO = 10
 numeroNeuronio = 1
 
@@ -116,11 +116,13 @@ def readSensor(DISPLAY,matrixMap,players,sensores):
     count = 0
     
     for p1, sensor  in zip(players,sensores):
-        while(matrixMap[p1.x+count][p1.y] != PAREDE and matrixMap[p1.x+count][p1.y] < INIMIGO and p1.x+count < 50):
+        count = 0
+        while(p1.x+count < 50 and matrixMap[p1.x+count][p1.y] != PAREDE and matrixMap[p1.x+count][p1.y] < INIMIGO):
             count +=1
         pygame.draw.line(DISPLAY, (0,150,0), (p1.x*SIZE_OBJECT, p1.y*SIZE_OBJECT), ((p1.x+ count)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
         sensor['R'] = matrixMap[p1.x+count][p1.y]
         sensor['RCount'] = count
+        # pygame.display.update() 
         
 
         count = 0
@@ -172,7 +174,7 @@ def readSensor(DISPLAY,matrixMap,players,sensores):
         pygame.draw.line(DISPLAY, (0,150,0), ((p1.x - count)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
         sensor['UL'] = matrixMap[p1.x-count][p1.y - count]
         sensor['ULCount'] = count
-    # pygame.display.update() 
+    
 
     # print(sensor)
     
@@ -257,46 +259,67 @@ def movimentaPlayer(p1,mapa,movimento):
 def combinacao_torneio(p1_redes,fitness):
     for _ in range(NUM_CRUZAMENTO_POR_EPOCA):
         
-        newIndividuo1 = Neural(p1_redes[0].nInput,np.array([0,0,0]))
-        newIndividuo2 = Neural(p1_redes[0].nInput,np.array([0,0,0]))
+        newIndividuo10 = Neural(p1_redes[0].nInput,np.array([0,0,0]))
+        newIndividuo20 = Neural(p1_redes[0].nInput,np.array([0,0,0]))
         
     
         isEqual = False
-        while(np.array_equal(newIndividuo1.camada1, newIndividuo2.camada1) ) :
+        while(np.array_equal(newIndividuo10.camada1, newIndividuo20.camada1) ) :
+            # print('asdds')
             isEqual = True
             individuosSelecionados = np.random.choice(NUM_POP, NUM_INVIDUOS_TORNEIO, replace=False)    
             
             a = np.argsort(fitness[individuosSelecionados])
             copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             a = a[:2] #pega os dois mais aptos
-            newIndividuo1 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
-            newIndividuo2 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
-        
-        if(randint(0,1)):
-            newIndividuo2.camada1, newIndividuo1.camada1 = newIndividuo1.camada1 , newIndividuo2.camada1
-        elif(randint(0,1)):
-            newIndividuo2.camada2, newIndividuo1.camada2 = newIndividuo1.camada2 , newIndividuo2.camada2
-        else:
-            newIndividuo2.camada3, newIndividuo1.camada3 = newIndividuo1.camada3 , newIndividuo2.camada3
+            newIndividuo10 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
+            newIndividuo11 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
+            newIndividuo12 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
+            newIndividuo20 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
+            newIndividuo21 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
+            newIndividuo22 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
 
-        a = randint(1,3)
-        if(a == 1):
             
-            newIndividuo1.camada1 = (newIndividuo1.camada1 + newIndividuo2.camada1)/2
-            newIndividuo2.camada1 = (newIndividuo1.camada1 + newIndividuo2.camada1)/2
-        if(a == 2):
-            newIndividuo1.camada2 = (newIndividuo1.camada2 + newIndividuo2.camada2)/2
-            newIndividuo2.camada2 = (newIndividuo1.camada2 + newIndividuo2.camada2)/2
-        if(a == 3):
-            newIndividuo1.camada3 = (newIndividuo1.camada3 + newIndividuo2.camada3)/2
-            newIndividuo2.camada3 = (newIndividuo1.camada3 + newIndividuo2.camada3)/2
+
+        newIndividuo10.camada1 = copy.deepcopy(newIndividuo20.camada1)
+        newIndividuo11.camada2 = copy.deepcopy(newIndividuo20.camada2)
+        newIndividuo12.camada3 = copy.deepcopy(newIndividuo20.camada3)
+
+        newIndividuo20.camada1 = copy.deepcopy(newIndividuo10.camada1)
+        newIndividuo21.camada2 = copy.deepcopy(newIndividuo10.camada2)
+        newIndividuo22.camada3 = copy.deepcopy(newIndividuo10.camada3)
+        
+        
+        # if(randint(0,1)):
+        #     newIndividuo2.camada1, newIndividuo1.camada1 = newIndividuo1.camada1 , newIndividuo2.camada1
+        # elif(randint(0,1)):
+        #     newIndividuo2.camada2, newIndividuo1.camada2 = newIndividuo1.camada2 , newIndividuo2.camada2
+        # else:
+        #     newIndividuo2.camada3, newIndividuo1.camada3 = newIndividuo1.camada3 , newIndividuo2.camada3
+
+        # a = randint(1,3)
+        # if(a == 1):
+            
+        #     newIndividuo1.camada1 = (newIndividuo1.camada1 + newIndividuo2.camada1)/2
+        #     newIndividuo2.camada1 = (newIndividuo1.camada1 + newIndividuo2.camada1)/2
+        # if(a == 2):
+        #     newIndividuo1.camada2 = (newIndividuo1.camada2 + newIndividuo2.camada2)/2
+        #     newIndividuo2.camada2 = (newIndividuo1.camada2 + newIndividuo2.camada2)/2
+        # if(a == 3):
+        #     newIndividuo1.camada3 = (newIndividuo1.camada3 + newIndividuo2.camada3)/2
+        #     newIndividuo2.camada3 = (newIndividuo1.camada3 + newIndividuo2.camada3)/2
             
         
      
         
 
-        p1_redes = np.append(newIndividuo1, p1_redes)
-        p1_redes = np.append(newIndividuo2, p1_redes)
+        p1_redes = np.append(newIndividuo10, p1_redes)
+        p1_redes = np.append(newIndividuo11, p1_redes)
+        p1_redes = np.append(newIndividuo12, p1_redes)
+
+        p1_redes = np.append(newIndividuo20, p1_redes)
+        p1_redes = np.append(newIndividuo21, p1_redes)
+        p1_redes = np.append(newIndividuo22, p1_redes)
         print(p1_redes.shape)
         
         return p1_redes
@@ -304,7 +327,7 @@ def selecaoNatural(p1_redes,fitness):
     for _ in range(NUM_CRUZAMENTO_POR_EPOCA):
         a = np.argsort(fitness)
         # print(fitness)
-        a = a[-2:] #pega os dois menos aptos
+        a = a[-6:] #pega os dois menos aptos
         # print(a)
         p1_redes = np.delete(p1_redes, a, axis = 0)
         return p1_redes
@@ -323,16 +346,26 @@ def fitness(p1_redes,verbose = 0):
 
 
     
-def mutacao(p1_redes):
-    for p1_rede, _ in zip(p1_redes,range(100)):
-        a = randint(1,100)
-        if(a <= TAXA_MUTACAO*100 ):
-            for _ in range(numeroNeuronio):
-                c = randint(1,3)
-                camada = getattr(p1_rede, 'camada'+str(c))
-                n = randint(0,camada.shape[0]-1)
-                peso =randint(0,camada.shape[1]-1)
-                camada[n][peso] = np.random.rand(1)[0]
+def mutacao(p1_redes,fitnessArray):
+    # print(fitnessArray[:10])
+    fit = np.argsort(fitnessArray)
+    # print(fit)
+        # print(fitness)
+    fit = fit[:10] #pega os 10 melhores
+    for p1_rede, index in zip(p1_redes,range(len(p1_redes))):
+        if not(index in fit[:10]):
+            a = randint(1,100)
+
+            if(a <= TAXA_MUTACAO*100 ):
+                for _ in range(numeroNeuronio):
+                    c = randint(1,3)
+                    camada = getattr(p1_rede, 'camada'+str(c))
+                    n = randint(0,camada.shape[0]-1)
+                    
+                    camada[n] = np.random.uniform(low = -1,high = 1,size = (1,len(camada[n])))
+                
+                
+                
             
     return p1_redes
 
@@ -380,8 +413,10 @@ def main():
     else:
         
         # Inicializa pop
-        for _ in range(NUM_POP):
+        for index in range(NUM_POP):
             p1_redes.append(Neural(len(sensor.values()),np.array([5,3,4])))
+            if(index < 1*NUM_POP - 2 ):
+                p1_redes[index].load()
 
         p1_redes = np.array(p1_redes)    
         
@@ -390,18 +425,24 @@ def main():
         while(geracao < 100000):
             
             
-            fitnessArray   = fitness(p1_redes)
-            p1_redes = mutacao(p1_redes)
-
-            p1_redes = combinacao_torneio(p1_redes,fitnessArray)
-            fitnessArray   = fitness(p1_redes)
-
-            
-            
-            p1_redes = selecaoNatural(p1_redes,fitnessArray)            
-            fitnessArray   = fitness(p1_redes,1)
+            if(geracao%10 ==0):
+                fitnessArray   = fitness(p1_redes,1)
+            else:
+                fitnessArray   = fitness(p1_redes,0)
+            print('geracao',geracao)
+            p1_redes[np.argmin(fitnessArray)].save()
             print(np.mean(fitnessArray))
             print(np.min(fitnessArray))
+            
+
+            p1_redes = combinacao_torneio(p1_redes,fitnessArray)
+            print("passou torneio")
+            # fitnessArray   = fitness(p1_redes)
+            # p1_redes = mutacao(p1_redes,fitnessArray)
+            fitnessArray   = fitness(p1_redes)
+            
+            p1_redes = selecaoNatural(p1_redes,fitnessArray)            
+            
             geracao += 1
 
         
