@@ -14,13 +14,13 @@ import time
 
 #constante do AG
 NUM_CRUZAMENTO_POR_EPOCA = 1
-NUM_INVIDUOS_TORNEIO = 170
-NUM_POP = 200
-TAXA_MUTACAO = 10
+NUM_INVIDUOS_TORNEIO = 10
+NUM_POP = 1000
+TAXA_MUTACAO = 80
 numeroNeuronio = 1
 
 
-MAX_RODADA = 200
+MAX_RODADA = 90
 
 WIDTH = 50
 HEIGHT = 50
@@ -62,7 +62,7 @@ YELLOW =(255,255,0)
 
 
 
-def showMap(DISPLAY,matrixMap,players,verbose=0):    
+def showMap(DISPLAY,matrixMap,players,verbose=0,bestIndviduo = 0):    
     
     
     count = 0
@@ -83,7 +83,7 @@ def showMap(DISPLAY,matrixMap,players,verbose=0):
                 
             count = count +1
     
-    for p1 in players:
+    for p1, index in zip(players,range(len(players))):
         if(matrixMap[p1.x][p1.y] > INIMIGO):
             p1.vida = 0
             funcaoFitness(p1)
@@ -91,12 +91,15 @@ def showMap(DISPLAY,matrixMap,players,verbose=0):
             print("morreu")
             
         else:
-            if(p1.vida == 0):
+            if(index == bestIndviduo):
+                pygame.draw.rect(DISPLAY,(0,255,255),(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
+            elif(p1.vida == 0):
                 pygame.draw.rect(DISPLAY,(128,128,128),(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
             else:
                 pygame.draw.rect(DISPLAY,(0,255,0),(p1.x*SIZE_OBJECT,p1.y*SIZE_OBJECT,SIZE_OBJECT,SIZE_OBJECT))
-        if(verbose == 1):
-            pygame.display.update() 
+    if(verbose == 1):
+        pass# TODO : Descomentar
+        pygame.display.update() 
     return 1
 def funcaoFitness(p1):
     #Posicai do fim do jogo
@@ -112,16 +115,21 @@ def funcaoFitness(p1):
 
 
     
-def readSensor(DISPLAY,matrixMap,players,sensores):
+def readSensor(DISPLAY,matrixMap,players,sensores,bestIndviduo):
     count = 0
+    # print(len(players),len(sensores))
+    for p1, sensor, index  in zip(players,sensores,range(len(players))):
+        # if(bestIndviduo!=-1):
+        #     print('Atualizando sensor ',index,"   melhor ind sensor",bestIndviduo, sensores[bestIndviduo])
     
-    for p1, sensor  in zip(players,sensores):
         count = 0
         while(p1.x+count < 50 and matrixMap[p1.x+count][p1.y] != PAREDE and matrixMap[p1.x+count][p1.y] < INIMIGO):
             count +=1
         pygame.draw.line(DISPLAY, (0,150,0), (p1.x*SIZE_OBJECT, p1.y*SIZE_OBJECT), ((p1.x+ count)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
-        sensor['R'] = matrixMap[p1.x+count][p1.y]
+        sensor['R'] = matrixMap[p1.x + count][p1.y]
         sensor['RCount'] = count
+        # if(bestIndviduo == index and bestIndviduo != -1):
+        #     print("melhor ind sensor R",count)
         # pygame.display.update() 
         
 
@@ -137,15 +145,17 @@ def readSensor(DISPLAY,matrixMap,players,sensores):
         while(matrixMap[p1.x][p1.y + count] != PAREDE and matrixMap[p1.x][p1.y + count] < INIMIGO ):
             count +=1
         pygame.draw.line(DISPLAY, (0,150,0), ((p1.x)*SIZE_OBJECT, (p1.y+count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
-        sensor['U'] = matrixMap[p1.x][p1.y+count]
-        sensor['UCount'] = count
+        sensor['D'] = matrixMap[p1.x][p1.y+count]
+        sensor['DCount'] = count
 
         count = 0
         while(matrixMap[p1.x][p1.y - count] != PAREDE and matrixMap[p1.x][p1.y - count] < INIMIGO ):
             count +=1
         pygame.draw.line(DISPLAY, (0,150,0), ((p1.x)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
-        sensor['D'] = matrixMap[p1.x][p1.y - count]
-        sensor['DCount'] = count
+        sensor['U'] = matrixMap[p1.x][p1.y - count]
+        sensor['UCount'] = count
+        # if(index == 5):
+            # print("UCount",sensor['UCount'])
 
         count = 0
         while(matrixMap[p1.x - count][p1.y + count] != PAREDE and matrixMap[p1.x-count][p1.y + count] < INIMIGO ):
@@ -174,22 +184,31 @@ def readSensor(DISPLAY,matrixMap,players,sensores):
         pygame.draw.line(DISPLAY, (0,150,0), ((p1.x - count)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
         sensor['UL'] = matrixMap[p1.x-count][p1.y - count]
         sensor['ULCount'] = count
+
+        
+    # print("s")
     
+    
+    # print(count)
+    # print("s")
+    
+    pygame.display.update() 
 
     # print(sensor)
     
 
 
 def criaInimigos():
-    enemy.append(Inimigo('v',16,25,20))
-    enemy.append(Inimigo('v',18,25,20))
-    enemy.append(Inimigo('v',20,25,20))
-    enemy.append(Inimigo('v',22,25,20))
-    enemy.append(Inimigo('v',24,25,20))
-    enemy.append(Inimigo('v',26,25,20))
-    enemy.append(Inimigo('v',28,25,20))
-    enemy.append(Inimigo('v',30,25,20))
-    enemy.append(Inimigo('v',30,25,20))
+    pass
+    # enemy.append(Inimigo('v',16,25,20))
+    # enemy.append(Inimigo('v',18,25,20))
+    # enemy.append(Inimigo('v',20,25,20))
+    # enemy.append(Inimigo('v',22,25,20))
+    # enemy.append(Inimigo('v',24,25,20))
+    # enemy.append(Inimigo('v',26,25,20))
+    # enemy.append(Inimigo('v',28,25,20))
+    # enemy.append(Inimigo('v',30,25,20))
+    # enemy.append(Inimigo('v',30,25,20))
 
 
     # enemy.append(Inimigo('h',25,16,10))
@@ -264,8 +283,8 @@ def combinacao_torneio(p1_redes,fitness):
         
     
         isEqual = False
-        while(np.array_equal(newIndividuo10.camada1, newIndividuo20.camada1) ) :
-            # print('asdds')
+        while(np.array_equal(newIndividuo10.camada1, newIndividuo20.camada1) and np.array_equal(newIndividuo10.camada2, newIndividuo20.camada2) ) :
+            print('asdds')
             isEqual = True
             individuosSelecionados = np.random.choice(NUM_POP, NUM_INVIDUOS_TORNEIO, replace=False)    
             
@@ -275,6 +294,7 @@ def combinacao_torneio(p1_redes,fitness):
             newIndividuo10 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             newIndividuo11 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             newIndividuo12 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
+            
             newIndividuo20 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
             newIndividuo21 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
             newIndividuo22 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
@@ -313,14 +333,13 @@ def combinacao_torneio(p1_redes,fitness):
      
         
 
-        p1_redes = np.append(newIndividuo10, p1_redes)
-        p1_redes = np.append(newIndividuo11, p1_redes)
-        p1_redes = np.append(newIndividuo12, p1_redes)
-
-        p1_redes = np.append(newIndividuo20, p1_redes)
-        p1_redes = np.append(newIndividuo21, p1_redes)
-        p1_redes = np.append(newIndividuo22, p1_redes)
-        print(p1_redes.shape)
+        p1_redes = np.append(copy.deepcopy(newIndividuo10), p1_redes)
+        p1_redes = np.append(copy.deepcopy(newIndividuo11), p1_redes)
+        p1_redes = np.append(copy.deepcopy(newIndividuo12), p1_redes)
+        p1_redes = np.append(copy.deepcopy(newIndividuo20), p1_redes)
+        p1_redes = np.append(copy.deepcopy(newIndividuo21), p1_redes)
+        p1_redes = np.append(copy.deepcopy(newIndividuo22), p1_redes)
+        # print(p1_redes.shape)
         
         return p1_redes
 def selecaoNatural(p1_redes,fitness):
@@ -334,9 +353,9 @@ def selecaoNatural(p1_redes,fitness):
         
 
 
-def fitness(p1_redes,verbose = 0):
+def fitness(p1_redes,verbose = 0,bestIndviduo=-1):
     players , sensores = inicializaPlayers(p1_redes.shape[0])
-    mainGame(players,p1_redes,sensores,True,verbose)
+    mainGame(players,p1_redes,sensores,True,verbose,bestIndviduo)
     fitness = []
     for p1 in players:
         fitness.append(p1.fitness) 
@@ -401,22 +420,23 @@ def main():
     if(0):
         players = []
         sensores = []
-        players.append(Player(1,12))
+        players , sensores = inicializaPlayers(1)
+        # players.append(Player(1,12))
+        
         p1_redes.append(Neural(len(sensor.values()),np.array([5,3,4])))
         
         # while(1):
         players[0].vida = True
-        mainGame(players,p1_redes,sensores,False)
-    
-
-    
+        mainGame(players,p1_redes,sensores,False,1)
+            
     else:
         
         # Inicializa pop
         for index in range(NUM_POP):
+            # p1_redes.append(Neural(len(sensor.values()),np.array([2,2,4])))
             p1_redes.append(Neural(len(sensor.values()),np.array([5,3,4])))
-            if(index < 1*NUM_POP - 2 ):
-                p1_redes[index].load()
+            # if(index < 2):
+            #     p1_redes[index].load()
 
         p1_redes = np.array(p1_redes)    
         
@@ -430,16 +450,18 @@ def main():
             else:
                 fitnessArray   = fitness(p1_redes,0)
             print('geracao',geracao)
-            p1_redes[np.argmin(fitnessArray)].save()
+            
             print(np.mean(fitnessArray))
             print(np.min(fitnessArray))
+            fitnessArray   = fitness(p1_redes,1,np.argmin(fitnessArray))
+            # fitnessArray   = fitness(p1_redes,1,5)
             
 
             p1_redes = combinacao_torneio(p1_redes,fitnessArray)
-            print("passou torneio")
-            # fitnessArray   = fitness(p1_redes)
+            # print("passou torneio")
+            # fitnessArray   = fitness(p1_redes,0)
             # p1_redes = mutacao(p1_redes,fitnessArray)
-            fitnessArray   = fitness(p1_redes)
+            fitnessArray   = fitness(p1_redes,0,np.argmin(fitnessArray))
             
             p1_redes = selecaoNatural(p1_redes,fitnessArray)            
             
@@ -480,9 +502,9 @@ def inicializaPlayers(size = 0):
     
     for _ in range(size):
         players.append(Player(1,12))
-        sensores.append(sensor)
+        sensores.append(copy.deepcopy(sensor))
     return players,sensores
-def mainGame(players,p1_redes,sensores,isMaquina,verbose):
+def mainGame(players,p1_redes,sensores,isMaquina,verbose,bestIndviduo=-1):
     
     pygame.init()
     DISPLAY = pygame.display.set_mode((SCREENW,SCREENH))
@@ -508,14 +530,13 @@ def mainGame(players,p1_redes,sensores,isMaquina,verbose):
     count = 0
     fimJogo = False
     NUMERO_RODADA = 0
+    # bestIndviduo = 5
     while not(fimJogo):
-        if(NUMERO_RODADA > MAX_RODADA ):
+        if(isMaquina and NUMERO_RODADA > MAX_RODADA ):
             for p1 in players:
                 if(p1.vida == 1): 
                     funcaoFitness(p1)
                     p1.vida = 0
-            print(players[0].fitness)
-            print("num maximo de rodada")
             break
         #Vez do player
         for event in pygame.event.get():
@@ -527,7 +548,8 @@ def mainGame(players,p1_redes,sensores,isMaquina,verbose):
                 if event.key == 112:                    
                     print(p1.__dict__)
                 if event.key == 115:                    
-                    print(sensor)
+                    readSensor(DISPLAY, mapa,players,sensores,-1)# já configura os sensoress
+                    print(sensores)
                 if(movimentaPlayer(players[0],mapa,event.key) == 0): 
                     fimJogo = True
                 
@@ -538,31 +560,28 @@ def mainGame(players,p1_redes,sensores,isMaquina,verbose):
         for a in enemy:
             a.step(mapa)
         # Vez da Maquina
-        readSensor(DISPLAY, mapa,players,sensores)# já configura os sensoress
+        
         if(isMaquina):
-            for p1,p1_rede,sensor in zip(players,p1_redes,sensores):
-                # print("a")
-                if(p1.vida == 1):
-                    # print("movimenta")
+            for p1,p1_rede,sensor,index in zip(players,p1_redes,sensores,range(len(players))):        
+                if(p1.vida == 1):    
                     movimento = p1_rede.predict(np.array(list(sensor.values())))
                     movimentaPlayer(p1,mapa,movimento)
+                    
                     
         fimJogo = True
         for p1 in players:
             if(p1.vida == 1): 
                 fimJogo = False
-
-        showMap(DISPLAY,mapa,players,verbose) 
         
-            
-        # distancia =pow(pow(p1.x - XFINAL,2) + pow(p1.y - YFINAL,2),0.5)
-        # print(distancia)
+        if(bestIndviduo != -1):
+            p1_redes[bestIndviduo].save()
         
-        clock.tick(1000000)
-    # retorna o fitness
+        showMap(DISPLAY,mapa,players,verbose,bestIndviduo) 
+        readSensor(DISPLAY, mapa,players,sensores,bestIndviduo)# já configura os sensoress        
+        # time.sleep(2)  
+        # clock.tick(1)
     
         NUMERO_RODADA += 1
     return 1
     
-
 main()

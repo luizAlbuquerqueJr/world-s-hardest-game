@@ -16,10 +16,15 @@ class Neural:
     def sigmoid(x):                                        
         return 1 / (1 + np.exp(-x))
     def load(self):
-        self.camada1 = np.load('camada1.npy')
-        print(self.camada1)
-        self.camada2 = np.load('camada2.npy')
-        self.camada3 = np.load('camada3.npy')
+        self.camada1 = np.load('bestobject1/camada1.npy')
+        self.camada2 = np.load('bestobject1/camada2.npy')
+        self.camada3 = np.load('bestobject1/camada3.npy')
+        # print("loadcamada1")
+        # print(self.camada1)
+        # print("camada2")
+        # print(self.camada2)
+        # print("camada3")
+        # print(self.camada3)
     def save(self):
         np.save('camada1', self.camada1)
         np.save('camada2', self.camada2)
@@ -39,9 +44,9 @@ class Neural:
         else:
             self.nInput = nInput
             # np.random.uniform(low=-1, high=1, size=(3,4))
-            self.camada1 = np.random.uniform(low = -2,high = 2,size = (camadas[0],nInput +1))
-            self.camada2 = np.random.uniform(low = -2,high = 2,size = (camadas[1],camadas[0] + 1))
-            self.camada3 = np.random.uniform(low = -2,high = 2,size = (camadas[2],camadas[1] + 1))
+            self.camada1 = np.random.uniform(low = -1,high = 1,size = (camadas[0],nInput +1))
+            self.camada2 = np.random.uniform(low = -1,high = 1,size = (camadas[1],camadas[0] + 1))
+            self.camada3 = np.random.uniform(low = -1,high = 1,size = (camadas[2],camadas[1] + 1))
         
         
 #         self.camada1 = np.zeros((camadas[0],nInput +1))

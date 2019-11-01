@@ -24,46 +24,40 @@ class Player:
         
     def step(self,mapa,movimento):
         
-        if(self.x < 4 or self.x > 44) :
-            mapa[self.x][self.y] = self.INICIO
-        else: 
-            mapa[self.x][self.y] = self.LIVRE
-
-
         if(movimento == self.MOV_DOWN):
             if(mapa[self.x][self.y+1] == self.PAREDE):
-                # self.mapaPlayer[self.x][self.y] = 1
+                
                 self.vida = 0
                 return False
             else:
                 self.y += 1
-                # self.mapaPlayer[self.x][self.y] = 1
+                
                 
         if(movimento == self.MOV_RIGHt):
             if(mapa[self.x +1 ][self.y] == self.PAREDE):
-                # self.mapaPlayer[self.x][self.y] = 1
+                
                 self.vida = 0
                 return False
             else:
                 if(self.x != len(mapa[0])):
                     self.x += 1
-                # self.mapaPlayer[self.x][self.y] = 1
+                
         if(movimento == self.MOV_UP):
             if(mapa[self.x][self.y-1] == self.PAREDE ):
-                # self.mapaPlayer[self.x][self.y] = 1
+                
                 self.vida = 0
                 return False
             else:
                 self.y -= 1
-                # self.mapaPlayer[self.x][self.y] = 1
+                
         if(movimento == self.MOV_LEFT):
             if(mapa[self.x -1 ][self.y] == self.PAREDE):
-                # self.mapaPlayer[self.x][self.y] = 1
+                
                 self.vida = 0
                 return False
             else:
                 if(self.x != 0):
                     self.x -= 1
-                # self.mapaPlayer[self.x][self.y] = 1
+                
         return True
     
