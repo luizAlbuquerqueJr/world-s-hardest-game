@@ -3,6 +3,7 @@ from pygame.locals import *
 import numpy as np 
 import copy
 from random import randint
+import matplotlib.pyplot as plt
 
 from inimigo import Inimigo
 from player import Player
@@ -14,9 +15,9 @@ import time
 
 #constante do AG
 NUM_CRUZAMENTO_POR_EPOCA = 1
-NUM_INVIDUOS_TORNEIO = 10
-NUM_POP = 1000
-TAXA_MUTACAO = 80
+NUM_INVIDUOS_TORNEIO = 50
+NUM_POP = 500
+TAXA_MUTACAO = 3
 numeroNeuronio = 1
 
 
@@ -87,8 +88,7 @@ def showMap(DISPLAY,matrixMap,players,verbose=0,bestIndviduo = 0):
         if(matrixMap[p1.x][p1.y] > INIMIGO):
             p1.vida = 0
             funcaoFitness(p1)
-            
-            print("morreu")
+            # print("morreu")
             
         else:
             if(index == bestIndviduo):
@@ -105,13 +105,15 @@ def funcaoFitness(p1):
     #Posicai do fim do jogo
     XFINAL = 45
     YFINAL = 13
-
+    distIntermediaria = 0
     if(p1.x < 5):
-        XFINAL = 5
-        YFINAL = 33
-        p1.fitness = 1000 *(pow(pow(p1.x - XFINAL,2) + pow(p1.y - YFINAL,2),0.5))
+        XIntermediario = 5
+        YIntermediario = 33
+        distIntermediaria = (pow(pow(p1.x - XIntermediario,2) + pow(p1.y - YIntermediario,2),0.5))
+        p1.fitness = distIntermediaria + (pow(pow(XIntermediario - XFINAL,2) + pow(YIntermediario - YFINAL,2),0.5))
     else:
         p1.fitness =pow(pow(p1.x - XFINAL,2) + pow(p1.y - YFINAL,2),0.5)
+    
 
 
     
@@ -200,26 +202,26 @@ def readSensor(DISPLAY,matrixMap,players,sensores,bestIndviduo):
 
 def criaInimigos():
     pass
-    # enemy.append(Inimigo('v',16,25,20))
-    # enemy.append(Inimigo('v',18,25,20))
-    # enemy.append(Inimigo('v',20,25,20))
-    # enemy.append(Inimigo('v',22,25,20))
-    # enemy.append(Inimigo('v',24,25,20))
-    # enemy.append(Inimigo('v',26,25,20))
-    # enemy.append(Inimigo('v',28,25,20))
-    # enemy.append(Inimigo('v',30,25,20))
-    # enemy.append(Inimigo('v',30,25,20))
+    enemy.append(Inimigo('v',16,25,50))
+    enemy.append(Inimigo('v',18,25,50))
+    enemy.append(Inimigo('v',20,25,50))
+    enemy.append(Inimigo('v',22,25,50))
+    enemy.append(Inimigo('v',24,25,50))
+    enemy.append(Inimigo('v',26,25,50))
+    enemy.append(Inimigo('v',28,25,50))
+    enemy.append(Inimigo('v',30,25,50))
+    enemy.append(Inimigo('v',30,25,50))
 
 
-    # enemy.append(Inimigo('h',25,16,10))
-    # enemy.append(Inimigo('h',25,18,10))
-    # enemy.append(Inimigo('h',25,20,10))
-    # enemy.append(Inimigo('h',25,22,10))
-    # enemy.append(Inimigo('h',25,24,10))
-    # enemy.append(Inimigo('h',25,26,10))
-    # enemy.append(Inimigo('h',25,28,10))
-    # enemy.append(Inimigo('h',25,30,10))
-    # enemy.append(Inimigo('h',25,30,10))
+    enemy.append(Inimigo('h',25,16,50))
+    enemy.append(Inimigo('h',25,18,50))
+    enemy.append(Inimigo('h',25,20,50))
+    enemy.append(Inimigo('h',25,22,50))
+    enemy.append(Inimigo('h',25,24,50))
+    enemy.append(Inimigo('h',25,26,50))
+    enemy.append(Inimigo('h',25,28,50))
+    enemy.append(Inimigo('h',25,30,50))
+    enemy.append(Inimigo('h',25,30,50))
 
     # enemy.append(Inimigo('d1',25,16,10))
     # enemy.append(Inimigo('d1',25,18,10))
@@ -283,32 +285,64 @@ def combinacao_torneio(p1_redes,fitness):
         
     
         isEqual = False
-        while(np.array_equal(newIndividuo10.camada1, newIndividuo20.camada1) and np.array_equal(newIndividuo10.camada2, newIndividuo20.camada2) ) :
-            print('asdds')
+        while(np.array_equal(newIndividuo10.camada1, newIndividuo20.camada1) and np.array_equal(newIndividuo10.camada2, newIndividuo20.camada2) and np.array_equal(newIndividuo10.camada3, newIndividuo20.camada3) ) :
+            # print('asdds')
             isEqual = True
             individuosSelecionados = np.random.choice(NUM_POP, NUM_INVIDUOS_TORNEIO, replace=False)    
             
             a = np.argsort(fitness[individuosSelecionados])
-            copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
+            
             a = a[:2] #pega os dois mais aptos
+            newIndividuo1 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             newIndividuo10 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             newIndividuo11 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             newIndividuo12 = copy.deepcopy(p1_redes[individuosSelecionados][a[0]])
             
+            newIndividuo2 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
             newIndividuo20 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
             newIndividuo21 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
             newIndividuo22 = copy.deepcopy(p1_redes[individuosSelecionados][a[1]])
 
-            
+        # print("\tPai 1: ")
+        # print("camada1: ",newIndividuo1.camada1)
+        # print("camada2: ",newIndividuo1.camada2)
+        # print("camada3: ",newIndividuo1.camada3)    
+        # print("\tPai 2: ")
+        # print("camada1: ",newIndividuo2.camada1)
+        # print("camada2: ",newIndividuo2.camada2)
+        # print("camada3: ",newIndividuo2.camada3)
 
-        newIndividuo10.camada1 = copy.deepcopy(newIndividuo20.camada1)
-        newIndividuo11.camada2 = copy.deepcopy(newIndividuo20.camada2)
-        newIndividuo12.camada3 = copy.deepcopy(newIndividuo20.camada3)
+        newIndividuo10.camada1 = copy.deepcopy(newIndividuo2.camada1)
+        newIndividuo11.camada2 = copy.deepcopy(newIndividuo2.camada2)
+        newIndividuo12.camada3 = copy.deepcopy(newIndividuo2.camada3)
 
-        newIndividuo20.camada1 = copy.deepcopy(newIndividuo10.camada1)
-        newIndividuo21.camada2 = copy.deepcopy(newIndividuo10.camada2)
-        newIndividuo22.camada3 = copy.deepcopy(newIndividuo10.camada3)
-        
+        newIndividuo20.camada1 = copy.deepcopy(newIndividuo1.camada1)
+        newIndividuo21.camada2 = copy.deepcopy(newIndividuo1.camada2)
+        newIndividuo22.camada3 = copy.deepcopy(newIndividuo1.camada3)
+        # print("\tnewindviduo10: ")
+        # print("camada1: ",newIndividuo10.camada1)
+        # print("camada2: ",newIndividuo10.camada2)
+        # print("camada3: ",newIndividuo10.camada3)
+        # print("\tnewindviduo11: ")
+        # print("camada1: ",newIndividuo11.camada1)
+        # print("camada2: ",newIndividuo11.camada2)
+        # print("camada3: ",newIndividuo11.camada3)
+        # print("\tnewindviduo12: ")
+        # print("camada1: ",newIndividuo12.camada1)
+        # print("camada2: ",newIndividuo12.camada2)
+        # print("camada3: ",newIndividuo12.camada3)
+        # print("\tnewindviduo20: ")
+        # print("camada1: ",newIndividuo20.camada1)
+        # print("camada2: ",newIndividuo20.camada2)
+        # print("camada3: ",newIndividuo20.camada3)
+        # print("\tnewindviduo21: ")
+        # print("camada1: ",newIndividuo21.camada1)
+        # print("camada2: ",newIndividuo21.camada2)
+        # print("camada3: ",newIndividuo21.camada3)
+        # print("\tnewindviduo22: ")
+        # print("camada1: ",newIndividuo22.camada1)
+        # print("camada2: ",newIndividuo22.camada2)
+        # print("camada3: ",newIndividuo22.camada3)
         
         # if(randint(0,1)):
         #     newIndividuo2.camada1, newIndividuo1.camada1 = newIndividuo1.camada1 , newIndividuo2.camada1
@@ -368,11 +402,12 @@ def fitness(p1_redes,verbose = 0,bestIndviduo=-1):
 def mutacao(p1_redes,fitnessArray):
     # print(fitnessArray[:10])
     fit = np.argsort(fitnessArray)
-    # print(fit)
+    print(np.argmin(fitnessArray))
         # print(fitness)
-    fit = fit[:10] #pega os 10 melhores
+    fit = fit[:20] #pega os 5 melhores
+    print(fit)
     for p1_rede, index in zip(p1_redes,range(len(p1_redes))):
-        if not(index in fit[:10]):
+        if not(index in fit):
             a = randint(1,100)
 
             if(a <= TAXA_MUTACAO*100 ):
@@ -434,7 +469,7 @@ def main():
         # Inicializa pop
         for index in range(NUM_POP):
             # p1_redes.append(Neural(len(sensor.values()),np.array([2,2,4])))
-            p1_redes.append(Neural(len(sensor.values()),np.array([5,3,4])))
+            p1_redes.append(Neural(len(sensor.values()),np.array([10,10,4])))
             # if(index < 2):
             #     p1_redes[index].load()
 
@@ -442,30 +477,50 @@ def main():
         
         #Inicio de uma geração
         geracao = 0
+        fitness_avg = []
+        fitness_min = []
+        fitness_max = []
         while(geracao < 100000):
             
             
-            if(geracao%10 ==0):
-                fitnessArray   = fitness(p1_redes,1)
-            else:
+            if(geracao ==0):
                 fitnessArray   = fitness(p1_redes,0)
-            print('geracao',geracao)
+            else:
+                fitnessArray   = fitness(p1_redes,1,np.argmin(fitnessArray))    
+            fitness_avg.append(np.mean(fitnessArray))
+            fitness_min.append(np.min(fitnessArray))
+            fitness_max.append(np.max(fitnessArray))
+            if(geracao > 2):
+                name = 'Stage1Geracao'+str(0)
+                plt.figure(figsize=(10, 4))
+                plt.title(name)
+                plt.xlabel('Geração')
+                plt.ylabel('Fitness')
+                plt.grid(True)
+                plt.plot(fitness_avg, color='#17a589') # green
+                plt.plot(fitness_min, color='#175189')
+                plt.plot(fitness_max, color='#ff0000')
+                plt.savefig('imgs/' + name + '.png')
             
-            print(np.mean(fitnessArray))
-            print(np.min(fitnessArray))
-            fitnessArray   = fitness(p1_redes,1,np.argmin(fitnessArray))
+            p1_redes[np.argmin(fitnessArray)].save()
+            print('Geracao: ',geracao)
+            
+            print('Média da populacao: ',np.mean(fitnessArray))
+            print('Melhor fitness: ', np.min(fitnessArray))
+            
             # fitnessArray   = fitness(p1_redes,1,5)
             
 
             p1_redes = combinacao_torneio(p1_redes,fitnessArray)
             # print("passou torneio")
-            # fitnessArray   = fitness(p1_redes,0)
-            # p1_redes = mutacao(p1_redes,fitnessArray)
+            fitnessArray   = fitness(p1_redes,0)
+            p1_redes = mutacao(p1_redes,fitnessArray)
             fitnessArray   = fitness(p1_redes,0,np.argmin(fitnessArray))
             
             p1_redes = selecaoNatural(p1_redes,fitnessArray)            
             
             geracao += 1
+
 
         
 
@@ -573,8 +628,7 @@ def mainGame(players,p1_redes,sensores,isMaquina,verbose,bestIndviduo=-1):
             if(p1.vida == 1): 
                 fimJogo = False
         
-        if(bestIndviduo != -1):
-            p1_redes[bestIndviduo].save()
+        
         
         showMap(DISPLAY,mapa,players,verbose,bestIndviduo) 
         readSensor(DISPLAY, mapa,players,sensores,bestIndviduo)# já configura os sensoress        

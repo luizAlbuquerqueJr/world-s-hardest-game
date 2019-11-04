@@ -60,6 +60,7 @@ class Neural:
     
     def predict(self,X):
         b = np.append([1], X)
+        b = b/13
         # print(b)
         s0 = b.dot(self.camada1.transpose())
         s0 = self.sigmoid(s0)
