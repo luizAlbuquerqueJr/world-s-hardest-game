@@ -16,12 +16,15 @@ import time
 #constante do AG
 NUM_CRUZAMENTO_POR_EPOCA = 1
 NUM_INVIDUOS_TORNEIO = 50
-NUM_POP = 500
-TAXA_MUTACAO = 3
+NUM_POP = 100
+TAXA_MUTACAO = 0
+# NUM_INVIDUOS_TORNEIO = 50
+# NUM_POP = 500
+TAXA_MUTACAO = 0
 numeroNeuronio = 1
 
 
-MAX_RODADA = 90
+MAX_RODADA = 180
 
 WIDTH = 50
 HEIGHT = 50
@@ -132,7 +135,7 @@ def readSensor(DISPLAY,matrixMap,players,sensores,bestIndviduo):
         sensor['RCount'] = count
         # if(bestIndviduo == index and bestIndviduo != -1):
         #     print("melhor ind sensor R",count)
-        # pygame.display.update() 
+        
         
 
         count = 0
@@ -186,68 +189,283 @@ def readSensor(DISPLAY,matrixMap,players,sensores,bestIndviduo):
         pygame.draw.line(DISPLAY, (0,150,0), ((p1.x - count)*SIZE_OBJECT, (p1.y-count)*SIZE_OBJECT), ((p1.x)*SIZE_OBJECT, p1.y*SIZE_OBJECT))
         sensor['UL'] = matrixMap[p1.x-count][p1.y - count]
         sensor['ULCount'] = count
-
-        
-    # print("s")
-    
-    
-    # print(count)
-    # print("s")
-    
-    pygame.display.update() 
-
-    # print(sensor)
-    
-
+        # pygame.display.update() 
 
 def criaInimigos():
     pass
-    enemy.append(Inimigo('v',16,25,50))
-    enemy.append(Inimigo('v',18,25,50))
-    enemy.append(Inimigo('v',20,25,50))
-    enemy.append(Inimigo('v',22,25,50))
-    enemy.append(Inimigo('v',24,25,50))
-    enemy.append(Inimigo('v',26,25,50))
-    enemy.append(Inimigo('v',28,25,50))
-    enemy.append(Inimigo('v',30,25,50))
-    enemy.append(Inimigo('v',30,25,50))
+    enemy.append(Inimigo('v',6,25,50,0))
+    enemy.append(Inimigo('v',8,25,50,0))
+    enemy.append(Inimigo('v',10,25,50,0))
+    enemy.append(Inimigo('v',12,25,50,0))
+    enemy.append(Inimigo('v',14,25,50,0))
+    enemy.append(Inimigo('v',16,25,50,0))
+    enemy.append(Inimigo('v',18,25,50,0))
+    enemy.append(Inimigo('v',20,25,50,0))
+    enemy.append(Inimigo('v',22,25,50,0))
+    enemy.append(Inimigo('v',24,25,50,0))
+    enemy.append(Inimigo('v',26,25,50,0))
+    enemy.append(Inimigo('v',28,25,50,0))
+    enemy.append(Inimigo('v',30,25,50,0))
+    enemy.append(Inimigo('v',32,25,50,0))
+    enemy.append(Inimigo('v',34,25,50,0))
+    enemy.append(Inimigo('v',36,25,50,0))
+    enemy.append(Inimigo('v',38,25,50,0))
+    enemy.append(Inimigo('v',40,25,50,0))
+    enemy.append(Inimigo('v',42,25,50,0))
+
+    enemy.append(Inimigo('v',6,20,50,0))
+    enemy.append(Inimigo('v',8,20,50,0))
+    enemy.append(Inimigo('v',10,20,50,0))
+    enemy.append(Inimigo('v',12,20,50,0))
+    enemy.append(Inimigo('v',14,20,50,0))
+    enemy.append(Inimigo('v',16,20,50,0))
+    enemy.append(Inimigo('v',18,20,50,0))
+    enemy.append(Inimigo('v',20,20,50,0))
+    enemy.append(Inimigo('v',22,20,50,0))
+    enemy.append(Inimigo('v',24,20,50,0))
+    enemy.append(Inimigo('v',26,20,50,0))
+    enemy.append(Inimigo('v',28,20,50,0))
+    enemy.append(Inimigo('v',30,20,50,0))
+    enemy.append(Inimigo('v',32,20,50,0))
+    enemy.append(Inimigo('v',34,20,50,0))
+    enemy.append(Inimigo('v',36,20,50,0))
+    enemy.append(Inimigo('v',38,20,50,0))
+    enemy.append(Inimigo('v',40,20,50,0))
+    enemy.append(Inimigo('v',42,20,50,0))
+
+    enemy.append(Inimigo('v',6,20,50,1))
+    enemy.append(Inimigo('v',8,20,50,1))
+    enemy.append(Inimigo('v',10,20,50,1))
+    enemy.append(Inimigo('v',12,20,50,1))
+    enemy.append(Inimigo('v',14,20,50,1))
+    enemy.append(Inimigo('v',16,20,50,1))
+    enemy.append(Inimigo('v',18,20,50,1))
+    enemy.append(Inimigo('v',20,20,50,1))
+    enemy.append(Inimigo('v',22,20,50,1))
+    enemy.append(Inimigo('v',24,20,50,1))
+    enemy.append(Inimigo('v',26,20,50,1))
+    enemy.append(Inimigo('v',28,20,50,1))
+    enemy.append(Inimigo('v',30,20,50,1))
+    enemy.append(Inimigo('v',32,20,50,1))
+    enemy.append(Inimigo('v',34,20,50,1))
+    enemy.append(Inimigo('v',36,20,50,1))
+    enemy.append(Inimigo('v',38,20,50,1))
+    enemy.append(Inimigo('v',40,20,50,1))
+    enemy.append(Inimigo('v',42,20,50,1))
+
+    enemy.append(Inimigo('v',6,15,50,1))
+    enemy.append(Inimigo('v',8,15,50,1))
+    enemy.append(Inimigo('v',10,15,50,1))
+    enemy.append(Inimigo('v',12,15,50,1))
+    enemy.append(Inimigo('v',14,15,50,1))
+    enemy.append(Inimigo('v',16,15,50,1))
+    enemy.append(Inimigo('v',18,15,50,1))
+    enemy.append(Inimigo('v',20,15,50,1))
+    enemy.append(Inimigo('v',22,15,50,1))
+    enemy.append(Inimigo('v',24,15,50,1))
+    enemy.append(Inimigo('v',26,15,50,1))
+    enemy.append(Inimigo('v',28,15,50,1))
+    enemy.append(Inimigo('v',30,15,50,1))
+    enemy.append(Inimigo('v',32,15,50,1))
+    enemy.append(Inimigo('v',34,15,50,1))
+    enemy.append(Inimigo('v',36,15,50,1))
+    enemy.append(Inimigo('v',38,15,50,1))
+    enemy.append(Inimigo('v',40,15,50,1))
+    enemy.append(Inimigo('v',42,15,50,1))
+
+    enemy.append(Inimigo('v',6,30,50,1))
+    enemy.append(Inimigo('v',8,30,50,1))
+    enemy.append(Inimigo('v',10,30,50,1))
+    enemy.append(Inimigo('v',12,30,50,1))
+    enemy.append(Inimigo('v',14,30,50,1))
+    enemy.append(Inimigo('v',16,30,50,1))
+    enemy.append(Inimigo('v',18,30,50,1))
+    enemy.append(Inimigo('v',20,30,50,1))
+    enemy.append(Inimigo('v',22,30,50,1))
+    enemy.append(Inimigo('v',24,30,50,1))
+    enemy.append(Inimigo('v',26,30,50,1))
+    enemy.append(Inimigo('v',28,30,50,1))
+    enemy.append(Inimigo('v',30,30,50,1))
+    enemy.append(Inimigo('v',32,30,50,1))
+    enemy.append(Inimigo('v',34,30,50,1))
+    enemy.append(Inimigo('v',36,30,50,1))
+    enemy.append(Inimigo('v',38,30,50,1))
+    enemy.append(Inimigo('v',40,30,50,1))
+    enemy.append(Inimigo('v',42,30,50,1))
+
+    
+
+    enemy.append(Inimigo('v',20,25,50,1))
+    enemy.append(Inimigo('v',21,25,50,1))
+    enemy.append(Inimigo('v',22,25,50,1))
+    enemy.append(Inimigo('v',23,25,50,1))
+    enemy.append(Inimigo('v',24,25,50,1))
+    enemy.append(Inimigo('v',25,25,50,1))
+    enemy.append(Inimigo('v',26,25,50,1))
+    enemy.append(Inimigo('v',27,25,50,1))
+
+    enemy.append(Inimigo('h',24,20,50,1))
+    enemy.append(Inimigo('h',24,21,50,1))
+    enemy.append(Inimigo('h',24,22,50,1))
+    enemy.append(Inimigo('h',24,23,50,1))
+    enemy.append(Inimigo('h',24,24,50,1))
+    enemy.append(Inimigo('h',24,25,50,1))
+    enemy.append(Inimigo('h',24,26,50,1))
+    enemy.append(Inimigo('h',24,27,50,1))
+
+    # enemy.append(Inimigo('v',7,25,50,1))
+    # enemy.append(Inimigo('v',9,25,50,1))
+    # enemy.append(Inimigo('v',11,25,50,1))
+    # enemy.append(Inimigo('v',13,25,50,1))
+    # enemy.append(Inimigo('v',15,25,50,1))
+    # enemy.append(Inimigo('v',17,25,50,1))
+    # enemy.append(Inimigo('v',19,25,50,1))
+    # enemy.append(Inimigo('v',21,25,50,1))
+    # enemy.append(Inimigo('v',23,25,50,1))
+    # enemy.append(Inimigo('v',25,25,50,1))
+    # enemy.append(Inimigo('v',27,25,50,1))
+    # enemy.append(Inimigo('v',29,25,50,1))
+    # enemy.append(Inimigo('v',31,25,50,1))
+    # enemy.append(Inimigo('v',33,25,50,1))
+    # enemy.append(Inimigo('v',35,25,50,1))
+    # enemy.append(Inimigo('v',37,25,50,1))
+    # enemy.append(Inimigo('v',39,25,50,1))
+    # enemy.append(Inimigo('v',41,25,50,1))
+    
 
 
-    enemy.append(Inimigo('h',25,16,50))
-    enemy.append(Inimigo('h',25,18,50))
-    enemy.append(Inimigo('h',25,20,50))
-    enemy.append(Inimigo('h',25,22,50))
-    enemy.append(Inimigo('h',25,24,50))
-    enemy.append(Inimigo('h',25,26,50))
-    enemy.append(Inimigo('h',25,28,50))
-    enemy.append(Inimigo('h',25,30,50))
-    enemy.append(Inimigo('h',25,30,50))
+    enemy.append(Inimigo('h',20,12,18,0))
+    enemy.append(Inimigo('h',20,14,18,0))
+    enemy.append(Inimigo('h',20,16,18,0))
+    enemy.append(Inimigo('h',20,18,18,0))
+    enemy.append(Inimigo('h',20,20,18,0))
+    enemy.append(Inimigo('h',20,22,18,0))
+    enemy.append(Inimigo('h',20,24,18,0))
+    enemy.append(Inimigo('h',20,26,18,0))
+    enemy.append(Inimigo('h',20,28,18,0))
+    enemy.append(Inimigo('h',20,30,18,0))
+    enemy.append(Inimigo('h',20,30,18,0))
+    enemy.append(Inimigo('h',20,32,18,0))
+    enemy.append(Inimigo('h',20,34,18,0))
+     
+    enemy.append(Inimigo('h',20,12,18,1))
+    enemy.append(Inimigo('h',20,14,18,1))
+    enemy.append(Inimigo('h',20,16,18,1))
+    enemy.append(Inimigo('h',20,18,18,1))
+    enemy.append(Inimigo('h',20,20,18,1))
+    enemy.append(Inimigo('h',20,22,18,1))
+    enemy.append(Inimigo('h',20,24,18,1))
+    enemy.append(Inimigo('h',20,26,18,1))
+    enemy.append(Inimigo('h',20,28,18,1))
+    enemy.append(Inimigo('h',20,30,18,1))
+    enemy.append(Inimigo('h',20,30,18,1))
+    enemy.append(Inimigo('h',20,32,18,1))
+    enemy.append(Inimigo('h',20,34,18,1))
 
-    # enemy.append(Inimigo('d1',25,16,10))
-    # enemy.append(Inimigo('d1',25,18,10))
-    # enemy.append(Inimigo('d1',25,20,10))
-    # enemy.append(Inimigo('d1',25,22,10))
-    # enemy.append(Inimigo('d1',25,24,10))
-    # enemy.append(Inimigo('d1',25,26,10))
-    # enemy.append(Inimigo('d1',25,28,10))
-    # enemy.append(Inimigo('d1',25,30,10))
-    # enemy.append(Inimigo('d1',25,30,10))
+    enemy.append(Inimigo('h',28,12,18,0))
+    enemy.append(Inimigo('h',28,14,18,0))
+    enemy.append(Inimigo('h',28,16,18,0))
+    enemy.append(Inimigo('h',28,18,18,0))
+    enemy.append(Inimigo('h',28,20,18,0))
+    enemy.append(Inimigo('h',28,22,18,0))
+    enemy.append(Inimigo('h',28,24,18,0))
+    enemy.append(Inimigo('h',28,26,18,0))
+    enemy.append(Inimigo('h',28,28,18,0))
+    enemy.append(Inimigo('h',28,30,18,0))
+    enemy.append(Inimigo('h',28,30,18,0))
+    enemy.append(Inimigo('h',28,32,18,0))
+    enemy.append(Inimigo('h',28,34,18,0))
+     
+    enemy.append(Inimigo('h',28,12,18,1))
+    enemy.append(Inimigo('h',28,14,18,1))
+    enemy.append(Inimigo('h',28,16,18,1))
+    enemy.append(Inimigo('h',28,18,18,1))
+    enemy.append(Inimigo('h',28,20,18,1))
+    enemy.append(Inimigo('h',28,22,18,1))
+    enemy.append(Inimigo('h',28,24,18,1))
+    enemy.append(Inimigo('h',28,26,18,1))
+    enemy.append(Inimigo('h',28,28,18,1))
+    enemy.append(Inimigo('h',28,30,18,1))
+    enemy.append(Inimigo('h',28,30,18,1))
+    enemy.append(Inimigo('h',28,32,18,1))
+    enemy.append(Inimigo('h',28,34,18,1))
+
+    enemy.append(Inimigo('h',24,12,18,0))
+    enemy.append(Inimigo('h',24,14,18,0))
+    enemy.append(Inimigo('h',24,16,18,0))
+    enemy.append(Inimigo('h',24,18,18,0))
+    enemy.append(Inimigo('h',24,20,18,0))
+    enemy.append(Inimigo('h',24,22,18,0))
+    enemy.append(Inimigo('h',24,24,18,0))
+    enemy.append(Inimigo('h',24,26,18,0))
+    enemy.append(Inimigo('h',24,28,18,0))
+    enemy.append(Inimigo('h',24,30,18,0))
+    enemy.append(Inimigo('h',24,30,18,0))
+    enemy.append(Inimigo('h',24,32,18,0))
+    enemy.append(Inimigo('h',24,34,18,0))
+
+    
+
+    enemy.append(Inimigo('h',24,12,18,1))
+    enemy.append(Inimigo('h',24,14,18,1))
+    enemy.append(Inimigo('h',24,16,18,1))
+    enemy.append(Inimigo('h',24,18,18,1))
+    enemy.append(Inimigo('h',24,20,18,1))
+    enemy.append(Inimigo('h',24,22,18,1))
+    enemy.append(Inimigo('h',24,24,18,1))
+    enemy.append(Inimigo('h',24,26,18,1))
+    enemy.append(Inimigo('h',24,28,18,1))
+    enemy.append(Inimigo('h',24,30,18,1))
+    enemy.append(Inimigo('h',24,30,18,1))
+    enemy.append(Inimigo('h',24,32,18,1))
+    enemy.append(Inimigo('h',24,34,18,1))
+    
+    
+    
+    enemy.append(Inimigo('d1',7,25,50,1))
+    enemy.append(Inimigo('d1',9,25,50,1))
+    enemy.append(Inimigo('d1',11,25,50,1))
+    enemy.append(Inimigo('d1',13,25,50,1))
+    enemy.append(Inimigo('d1',15,25,50,1))
+    enemy.append(Inimigo('d1',17,25,50,1))
+    enemy.append(Inimigo('d1',19,25,50,1))
+    enemy.append(Inimigo('d1',21,25,50,1))
+    enemy.append(Inimigo('d1',23,25,50,1))
+    enemy.append(Inimigo('d1',25,25,50,1))
+    enemy.append(Inimigo('d1',27,25,50,1))
+    enemy.append(Inimigo('d1',29,25,50,1))
+    enemy.append(Inimigo('d1',31,25,50,1))
+    enemy.append(Inimigo('d1',33,25,50,1))
+    enemy.append(Inimigo('d1',35,25,50,1))
+    enemy.append(Inimigo('d1',37,25,50,1))
+    enemy.append(Inimigo('d1',39,25,50,1))
+    enemy.append(Inimigo('d1',41,25,50,1))
 
 
     
     
-    # enemy.append(Inimigo('d2',25,18,10))
-    # enemy.append(Inimigo('d2',25,20,10))
-    # enemy.append(Inimigo('d2',25,22,10))
-    # enemy.append(Inimigo('d2',25,24,10))
-    # enemy.append(Inimigo('d2',25,26,10))
-    # enemy.append(Inimigo('d2',25,28,10))
-    # enemy.append(Inimigo('d2',25,30,10))
-    # enemy.append(Inimigo('d2',25,30,10))
+    enemy.append(Inimigo('d2',7,25,50,1))
+    enemy.append(Inimigo('d2',9,25,50,1))
+    enemy.append(Inimigo('d2',11,25,50,1))
+    enemy.append(Inimigo('d2',13,25,50,1))
+    enemy.append(Inimigo('d2',15,25,50,1))
+    enemy.append(Inimigo('d2',17,25,50,1))
+    enemy.append(Inimigo('d2',19,25,50,1))
+    enemy.append(Inimigo('d2',21,25,50,1))
+    enemy.append(Inimigo('d2',23,25,50,1))
+    enemy.append(Inimigo('d2',25,25,50,1))
+    enemy.append(Inimigo('d2',27,25,50,1))
+    enemy.append(Inimigo('d2',29,25,50,1))
+    enemy.append(Inimigo('d2',31,25,50,1))
+    enemy.append(Inimigo('d2',33,25,50,1))
+    enemy.append(Inimigo('d2',35,25,50,1))
+    enemy.append(Inimigo('d2',37,25,50,1))
+    enemy.append(Inimigo('d2',39,25,50,1))
+    enemy.append(Inimigo('d2',41,25,50,1))
+
     
-    
-    # enemy.append(Inimigo('v',22,30,50))
-    # enemy.append(Inimigo('h',10,30,10))
+
+
 def criaMapa(WIDTH,HEIGHT):
     mapa = np.loadtxt(open("mapa.csv", "rb"), delimiter=",", skiprows=1)
     mapa = np.transpose(mapa)
@@ -377,12 +595,47 @@ def combinacao_torneio(p1_redes,fitness):
         
         return p1_redes
 def selecaoNatural(p1_redes,fitness):
+    a = []
+    for i in range(6):
+        
+        ocorencias = np.where(fitness == fitness[i])
+        # if(len(ocorencias[0])!=1):
+        #     a.append(i)
+        # else:
+        #     print("gerou ind diferente")
+
+        for indexOcorrencia in ocorencias[0]:
+            # a.append(i)
+            # break
+            isNew = True
+            # if( i !=indexOcorrencia and  np.array_equal(p1_redes[i].camada1, p1_redes[indexOcorrencia].camada1)):
+            if( i !=indexOcorrencia and (np.array_equal(p1_redes[i].camada1, p1_redes[indexOcorrencia].camada1) or np.array_equal(p1_redes[i].camada2, p1_redes[indexOcorrencia].camada2) or np.array_equal(p1_redes[i].camada3, p1_redes[indexOcorrencia].camada3))):            
+                pass
+                a.append(i)
+                break
+            else:
+                isNew = False
+        if(isNew):
+            print("novo ind")
+                        
+    print("a")
+    print(a)
+    p1_redes = np.delete(p1_redes, a, axis = 0)
+    fitness = np.delete(fitness, a, axis = 0)
+
+
+        
+
+
     for _ in range(NUM_CRUZAMENTO_POR_EPOCA):
-        a = np.argsort(fitness)
-        # print(fitness)
-        a = a[-6:] #pega os dois menos aptos
-        # print(a)
-        p1_redes = np.delete(p1_redes, a, axis = 0)
+        if(len(a)!=6):
+            b = np.argsort(fitness)
+            # print(fitness)
+            b = b[-(6-len(a)):] #pega os dois menos aptos
+            # b = b[-6:] #pega os dois menos aptos
+            # print(b)
+            p1_redes = np.delete(p1_redes, b, axis = 0)
+            fitness = np.delete(fitness, b, axis = 0)
         return p1_redes
         
 
@@ -402,10 +655,9 @@ def fitness(p1_redes,verbose = 0,bestIndviduo=-1):
 def mutacao(p1_redes,fitnessArray):
     # print(fitnessArray[:10])
     fit = np.argsort(fitnessArray)
-    print(np.argmin(fitnessArray))
-        # print(fitness)
     fit = fit[:20] #pega os 5 melhores
     print(fit)
+    print(fitnessArray[fit])
     for p1_rede, index in zip(p1_redes,range(len(p1_redes))):
         if not(index in fit):
             a = randint(1,100)
@@ -470,8 +722,8 @@ def main():
         for index in range(NUM_POP):
             # p1_redes.append(Neural(len(sensor.values()),np.array([2,2,4])))
             p1_redes.append(Neural(len(sensor.values()),np.array([10,10,4])))
-            # if(index < 2):
-            #     p1_redes[index].load()
+            if(index < 1):
+                p1_redes[index].load()
 
         p1_redes = np.array(p1_redes)    
         
@@ -491,7 +743,7 @@ def main():
             fitness_min.append(np.min(fitnessArray))
             fitness_max.append(np.max(fitnessArray))
             if(geracao > 2):
-                name = 'Stage1Geracao'+str(0)
+                name = 'Stage2Geracao'+str(0)
                 plt.figure(figsize=(10, 4))
                 plt.title(name)
                 plt.xlabel('Geração')
@@ -632,8 +884,8 @@ def mainGame(players,p1_redes,sensores,isMaquina,verbose,bestIndviduo=-1):
         
         showMap(DISPLAY,mapa,players,verbose,bestIndviduo) 
         readSensor(DISPLAY, mapa,players,sensores,bestIndviduo)# já configura os sensoress        
-        # time.sleep(2)  
-        # clock.tick(1)
+        # time.sleep(3)  
+        # clock.tick(2)
     
         NUMERO_RODADA += 1
     return 1

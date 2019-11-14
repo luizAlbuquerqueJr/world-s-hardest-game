@@ -16,9 +16,9 @@ class Neural:
     def sigmoid(x):                                        
         return 1 / (1 + np.exp(-x))
     def load(self):
-        self.camada1 = np.load('bestobject1/camada1.npy')
-        self.camada2 = np.load('bestobject1/camada2.npy')
-        self.camada3 = np.load('bestobject1/camada3.npy')
+        self.camada1 = np.load('bestobject1/stage4.1/camada1.npy')
+        self.camada2 = np.load('bestobject1/stage4.1/camada2.npy')
+        self.camada3 = np.load('bestobject1/stage4.1/camada3.npy')
         # print("loadcamada1")
         # print(self.camada1)
         # print("camada2")
