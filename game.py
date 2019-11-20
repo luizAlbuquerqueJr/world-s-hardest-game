@@ -15,9 +15,9 @@ import time
 
 #constante do AG
 NUM_CRUZAMENTO_POR_EPOCA = 1
-NUM_INVIDUOS_TORNEIO = 50
-NUM_POP = 100
-TAXA_MUTACAO = 0
+NUM_INVIDUOS_TORNEIO = 500
+NUM_POP = 1000
+TAXA_MUTACAO = 15
 # NUM_INVIDUOS_TORNEIO = 50
 # NUM_POP = 500
 TAXA_MUTACAO = 0
@@ -655,7 +655,7 @@ def fitness(p1_redes,verbose = 0,bestIndviduo=-1):
 def mutacao(p1_redes,fitnessArray):
     # print(fitnessArray[:10])
     fit = np.argsort(fitnessArray)
-    fit = fit[:20] #pega os 5 melhores
+    fit = fit[:5] #pega os 5 melhores
     print(fit)
     print(fitnessArray[fit])
     for p1_rede, index in zip(p1_redes,range(len(p1_redes))):
@@ -667,12 +667,7 @@ def mutacao(p1_redes,fitnessArray):
                     c = randint(1,3)
                     camada = getattr(p1_rede, 'camada'+str(c))
                     n = randint(0,camada.shape[0]-1)
-                    
                     camada[n] = np.random.uniform(low = -1,high = 1,size = (1,len(camada[n])))
-                
-                
-                
-            
     return p1_redes
 
 
@@ -722,8 +717,8 @@ def main():
         for index in range(NUM_POP):
             # p1_redes.append(Neural(len(sensor.values()),np.array([2,2,4])))
             p1_redes.append(Neural(len(sensor.values()),np.array([10,10,4])))
-            if(index < 1):
-                p1_redes[index].load()
+            # if(index < 1):
+            #     p1_redes[index].load()
 
         p1_redes = np.array(p1_redes)    
         
@@ -754,8 +749,11 @@ def main():
                 plt.plot(fitness_max, color='#ff0000')
                 plt.savefig('imgs/' + name + '.png')
             
-            p1_redes[np.argmin(fitnessArray)].save()
-            print('Geracao: ',geracao)
+            p1_redes[np.argmin(fitnessArray)].save('best')
+            if(geracao % 100 == 0):
+                for p1_rede, i in zip(p1_redes,range(len(p1_redes))):
+                    p1_rede.save(str(i))
+                    print('Geracao: ',geracao)
             
             print('Média da populacao: ',np.mean(fitnessArray))
             print('Melhor fitness: ', np.min(fitnessArray))

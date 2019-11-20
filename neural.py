@@ -25,10 +25,10 @@ class Neural:
         # print(self.camada2)
         # print("camada3")
         # print(self.camada3)
-    def save(self):
-        np.save('camada1', self.camada1)
-        np.save('camada2', self.camada2)
-        np.save('camada3', self.camada3)
+    def save(self,nome):
+        np.save('populacao/' + nome +'camada1', self.camada1)
+        np.save('populacao/' + nome +'Camada2', self.camada2)
+        np.save('populacao/' + nome + 'camada3', self.camada3)
         
         
 
